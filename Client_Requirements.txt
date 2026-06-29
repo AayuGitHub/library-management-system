@@ -1,0 +1,292 @@
+===============================
+ Library Management System
+ Client Requirements
+===============================
+
+A local library wants a console-based Library Management System to replace
+their paper records.
+
+The librarian should be able to:
+  - Maintain books and members
+  - Borrow and return books
+  - Search books and members
+  - View borrowing history
+  - Save all information automatically
+
+The application must use Object-Oriented Programming and persist data so
+that records remain after restarting the application.
+
+
+===============================
+ Learning Goal
+===============================
+
+Unlike previous projects where you managed only one object type, this
+project introduces multiple object types that interact with each other:
+
+    Member
+       │
+       │ borrows
+       ▼
+      Book
+
+Your program now has relationships, not just data.
+
+
+===============================
+ Main Menu
+===============================
+
+    1.  Add Book
+    2.  View Books
+    3.  Search Book
+    4.  Update Book
+    5.  Delete Book
+
+    6.  Add Member
+    7.  View Members
+    8.  Search Member
+    9.  Update Member
+    10. Delete Member
+
+    11. Borrow Book
+    12. Return Book
+
+    13. Borrowing Report
+
+    14. Exit
+
+
+===============================
+ Data Models
+===============================
+
+--- Book ---
+
+  Book ID           : B101          (auto-generated)
+  Title             : Atomic Habits
+  Author            : James Clear
+  Genre             : Self Help
+  Publication Year  : 2018
+  Available         : Yes
+
+
+--- Member ---
+
+  Member ID  : M101                 (auto-generated)
+  Name       : Aayush
+  Age        : 24
+  Phone      : 9876543210
+
+
+--- Borrow Record ---
+
+  Borrow ID    : BR101              (auto-generated)
+  Book ID      : B101
+  Member ID    : M101
+  Borrow Date  : 29-06-2026
+  Return Date  : None               (empty until returned)
+
+
+===============================
+ Features
+===============================
+
+--- Feature 1: Add Book ---
+
+  Librarian enters: Title, Author, Genre, Publication Year
+  Book ID is generated automatically.
+
+
+--- Feature 2: View Books ---
+
+  Display every book in this format:
+
+    ---------------------------------
+    Book ID  :
+    Title    :
+    Author   :
+    Genre    :
+    Year     :
+    Status   :
+    ---------------------------------
+
+
+--- Feature 3: Search Book ---
+
+  Search by:  Book ID  or  Title
+
+
+--- Feature 4: Update Book ---
+
+  Updatable fields:  Title, Author, Genre, Year
+  Book ID cannot be updated.
+
+
+--- Feature 5: Delete Book ---
+
+  Can delete only if:
+    - The book exists
+    - The book is NOT currently borrowed
+
+  If borrowed → display: "Book cannot be deleted because it is currently issued."
+
+
+--- Feature 6: Add Member ---
+
+  Librarian enters: Name, Age, Phone
+  Member ID is generated automatically.
+
+
+--- Feature 7: View Members ---
+
+  Display all registered members.
+
+
+--- Feature 8: Search Member ---
+
+  Search by:  Member ID  or  Name
+
+
+--- Feature 9: Update Member ---
+
+  Updatable fields:  Name, Age, Phone
+
+
+--- Feature 10: Delete Member ---
+
+  Can delete only if:
+    - The member has no currently borrowed books
+
+  If active borrows exist → display: "Member still has borrowed books. Cannot delete."
+
+
+--- Feature 11: Borrow Book ---
+
+  Workflow:
+    1. Enter Member ID
+    2. Enter Book ID
+    3. Check member exists
+    4. Check book exists
+    5. Check book is available
+    6. Create borrow record
+    7. Mark book as unavailable
+
+
+--- Feature 12: Return Book ---
+
+  Workflow:
+    1. Member returns book
+    2. Find the open borrow record
+    3. Set return date to today
+    4. Mark book as available again
+
+
+--- Feature 13: Borrowing Report ---
+
+  Display all borrow records with:
+    - Borrow ID
+    - Member Name
+    - Book Title
+    - Borrow Date
+    - Return Date (or "Not returned yet")
+
+
+--- Feature 14: Save & Load Data ---
+
+  Save automatically on exit:
+    - books.json
+    - members.json
+    - borrow_records.json
+
+  Load all three files automatically when the program starts.
+
+
+===============================
+ Validation Rules
+===============================
+
+Books:
+  - Title cannot be empty
+  - Author cannot be empty
+  - Publication year must be a valid number
+
+Members:
+  - Name cannot be empty
+  - Age must be a positive number
+  - Phone must contain digits only
+
+Borrow:
+  - Cannot borrow if book doesn't exist
+  - Cannot borrow if member doesn't exist
+  - Cannot borrow if book is already borrowed
+
+Return:
+  - Cannot return an already-returned book
+  - Cannot return with an invalid borrow record
+
+
+===============================
+ Suggested Folder Structure
+===============================
+
+  Library_Management_System/
+  ├── main.py
+  ├── Book.py
+  ├── Member.py
+  ├── BorrowRecord.py
+  ├── LibraryManager.py
+  ├── books.json
+  ├── members.json
+  └── borrow_records.json
+
+
+===============================
+ Design Constraints
+===============================
+
+  - main.py         → user interaction only (menu, input, output)
+  - Book.py         → represents a single book entity
+  - Member.py       → represents a single member entity
+  - BorrowRecord.py → represents a single borrow transaction
+  - LibraryManager  → all business logic and JSON persistence
+
+  - Avoid duplicated code
+  - Use type hints and meaningful docstrings
+  - Keep each method focused on a single responsibility
+  - Use unique IDs for books, members, and borrow records
+
+
+===============================
+ Mentor Challenge (No Hints)
+===============================
+
+Before writing any code, answer these design questions:
+
+  1.  How many classes will you create?
+  2.  What is the responsibility of each class?
+  3.  Which class should own the collections of books, members, and borrow records?
+  4.  How will you represent the relationship between a book and a member?
+  5.  How will you know whether a book is currently available?
+  6.  When a book is returned, what data should change?
+  7.  Which methods belong in the data classes (Book, Member, BorrowRecord)?
+  8.  Which methods belong in LibraryManager?
+  9.  Where should JSON loading and saving happen?
+  10. How will you prevent invalid operations like borrowing an unavailable book?
+
+
+===============================
+ Deliverables
+===============================
+
+  Your final project should include:
+
+  ✓ Book Management       (add, view, search, update, delete)
+  ✓ Member Management     (add, view, search, update, delete)
+  ✓ Borrow Book
+  ✓ Return Book
+  ✓ Borrowing Report
+  ✓ JSON Persistence
+  ✓ Clean OOP Design
+  ✓ Input Validation
+  ✓ Modular Code
