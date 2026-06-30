@@ -3,8 +3,7 @@
  Client Requirements
 ===============================
 
-A local library wants a console-based Library Management System to replace
-their paper records.
+A local library wants a console-based Library Management System to replace their paper records.
 
 The librarian should be able to:
   - Maintain books and members
@@ -21,8 +20,7 @@ that records remain after restarting the application.
  Learning Goal
 ===============================
 
-Unlike previous projects where you managed only one object type, this
-project introduces multiple object types that interact with each other:
+Unlike previous projects where you managed only one object type, this project introduces multiple object types that interact with each other:
 
     Member
        │
@@ -107,7 +105,7 @@ Your program now has relationships, not just data.
     Title    :
     Author   :
     Genre    :
-    Year     :
+    Genre     :
     Status   :
     ---------------------------------
 
